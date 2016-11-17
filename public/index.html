@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome to Firebase Hosting</title>
+  </head>
+  <body>
+    <input type="text" name="name"/>
+
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyD03ggT9NXR-iY2o2WXmdu0GEmtTMJu8WY",
+        authDomain: "retro-976fa.firebaseapp.com",
+        databaseURL: "https://retro-976fa.firebaseio.com",
+      };
+      firebase.initializeApp(config);
+      let database = firebase.database();
+      database.ref('db').set({a: 1});
+      database.ref('users/' + 1).on('value', data => {
+        console.log(data.val());
+      });
+      database.ref('users/' + 1).set({a: 2});
+    </script>
+  </body>
+</html>
