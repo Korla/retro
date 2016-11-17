@@ -5,9 +5,27 @@
     <title>Welcome to Firebase Hosting</title>
   </head>
   <body>
-    <input type="text" name="name"/>
+    <div id="app">
+      <div>
+        <div v-for="opinion in opinions">
+          <span>{{ opinion.text }}</span>
+          <button type="button" v-on:click="publish(opinion)">Publish</button>
+        </div>
+      </div>
+      <div>
+        <input type="checkbox" v-model="newOpinion.value"/>
+        <input type="text" v-model="newOpinion.text"/>
+        <button type="button" v-on:click="add">Add</button>
+      </div>
+        <div>
+          <div v-for="opinion in db">
+            <span>{{ opinion.text }}</span>
+          </div>
+        </div>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script src="vue.js"></script>
     <script>
       var config = {
         apiKey: "AIzaSyD03ggT9NXR-iY2o2WXmdu0GEmtTMJu8WY",
@@ -16,11 +34,38 @@
       };
       firebase.initializeApp(config);
       let database = firebase.database();
-      database.ref('db').set({a: 1});
-      database.ref('users/' + 1).on('value', data => {
-        console.log(data.val());
+
+      var app = new Vue({
+        el: '#app',
+        data: {
+          opinions: [],
+          newOpinion: {
+            text: '',
+            value: 0
+          },
+          db: [{
+            text: 'test',
+            value: 0
+          }]
+        },
+        methods: {
+          add: function() {
+            this.opinions.push(this.newOpinion);
+            this.newOpinion = {
+              text: '',
+              value: 0
+            };
+          },
+          publish: function(opinion) {
+            this.db.push(this.opinions.splice(this.opinions.indexOf(opinion), 1)[0]);
+            database.ref('db').set(this.db);
+          },
+        }
       });
-      database.ref('users/' + 1).set({a: 2});
+
+      database.ref('db').on('value', data => {
+        app.db = data.val() || [];
+      });
     </script>
   </body>
 </html>
