@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "firebase serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase-tools": "^3.1.0",
-    "vue": "^2.0.7"
+    "firebase-tools": "3.1.0",
+    "vue": "1.0.24"
   }
 }

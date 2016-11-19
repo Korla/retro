@@ -1,0 +1,78 @@
+body {
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+.retro-infotext {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.retro-opinions {
+  display: flex;
+  flex-wrap: wrap;
+}
+.mdl-list__item {
+  flex-direction: column;
+}
+.mdl-list__item .mdl-list__item-primary-content {
+  width: 100%;
+}
+.mdl-switch {
+  width: 40px;
+  margin-left: 15px;
+}
+.mdl-list__item .mdl-list__item-secondary-content {
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+.mdl-textfield {
+  width: 100%;
+}
+.mdl-list {
+  margin: 0;
+  padding: 0;
+}
+.mdl-cell > * + * {
+  margin-top: 10px;
+}
+.retro-card {
+  display: inline-block;
+  margin: 0px 10px 10px 0px;
+  padding: 10px;
+  width: 200px;
+}
+.retro-card__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.retro-card__text {
+  max-height: 100px;
+  overflow-y: scroll;
+  margin: 16px;
+  padding: 0;
+}
+.material-icons.retro-thumb {
+  transition: transform 200ms;
+  background-color: rgb(56, 142, 60);
+}
+.material-icons.retro-thumb__down {
+  transform: rotate(180deg);
+  background-color: rgb(211, 47, 47);
+}
+.retro-layout {
+  transition: opacity 200ms;
+}
+.retro-layout__hidden {
+  opacity: 0;
+}
+.mdl-switch .mdl-switch__thumb {
+  background-color: rgb(211, 47, 47);
+}
+.mdl-switch.is-checked .mdl-switch__thumb {
+  background: rgb(56, 142, 60);
+}
+.retro-list__item + .retro-list__item {
+  margin-top: 5px;
+}

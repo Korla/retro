@@ -2,67 +2,88 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Welcome to Firebase Hosting</title>
+    <title>Retro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.grey-red.min.css" />
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <div id="app">
-      <div>
-        <div v-for="opinion in opinions">
-          <span>{{ opinion.text }}</span>
-          <button type="button" v-on:click="publish(opinion)">Publish</button>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" id="app">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Retro</span>
+          <div class="mdl-layout-spacer"></div>
+          <mdl-button v-mdl-ripple-effect v-on:click="reset" raised accent>Reset</mdl-button>
         </div>
-      </div>
-      <div>
-        <input type="checkbox" v-model="newOpinion.value"/>
-        <input type="text" v-model="newOpinion.text"/>
-        <button type="button" v-on:click="add">Add</button>
-      </div>
-        <div>
-          <div v-for="opinion in db">
-            <span>{{ opinion.text }}</span>
+      </header>
+      <main class="mdl-layout__content retro-layout retro-layout__hidden" v-bind:class="{'retro-layout__hidden': !initialized}">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+            <div class="retro-infotext">
+              <label for="opinion">1. Add your opinions locally</label>
+            </div>
+            <ul class="mdl-list">
+              <li class="mdl-list__item mdl-shadow--2dp">
+                <div class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-avatar retro-thumb"
+                     v-bind:class="{ 'retro-thumb__down': !newOpinion.value }">
+                     thumb_up
+                   </i>
+                  <mdl-textfield v-el:new-opinion-element v-on:keyup.enter="add" floating-label="Text" :value.sync="newOpinion.text" id="opinion"></mdl-textfield>
+                  <mdl-switch :checked.sync="newOpinion.value" class="mdl-js-ripple-effect"></mdl-switch>
+                </div>
+                <div class="mdl-list__item-secondary-content">
+                  <mdl-button v-mdl-ripple-effect v-on:click="clear" accent>Clear</mdl-button>
+                  <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="!newOpinion.text" disabled>Add</mdl-button>
+                  <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="newOpinion.text">Add</mdl-button>
+                </div>
+              </li>
+            </ul>
+            <div class="retro-infotext">
+              <label for="opinion">2. Publish them when it's your turn</label>
+            </div>
+            <ul class="mdl-list">
+              <li class="mdl-list__item retro-list__item mdl-shadow--2dp" v-for="opinion in opinions">
+                <div class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-avatar retro-thumb"
+                     v-bind:class="{ 'retro-thumb__down': !opinion.value }">
+                     thumb_up
+                   </i>
+                  <mdl-textfield floating-label="Text" :value.sync="opinion.text"></mdl-textfield>
+                  <mdl-switch :checked.sync="opinion.value" class="mdl-js-ripple-effect"></mdl-switch>
+                </div>
+                <div class="mdl-list__item-secondary-content">
+                  <mdl-button v-mdl-ripple-effect v-on:click="remove(opinion)" accent>Remove</mdl-button>
+                  <mdl-button v-mdl-ripple-effect v-on:click="publish(opinion)">Publish</mdl-button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
+            <div class="retro-infotext">
+              <label for="opinion">3. Vote on the published opinions</label>
+            </div>
+            <div class="retro-opinions">
+              <div v-for="opinion in db" class="retro-card mdl-shadow--2dp">
+                <div class="retro-card__title">
+                  <i class="material-icons mdl-list__item-avatar retro-thumb"
+                     v-bind:class="{ 'retro-thumb__down': !opinion.value }">
+                     thumb_up
+                  </i>
+                  <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion)">Vote ({{opinion.votes}})</mdl-button>
+                </div>
+                <div class="mdl-card__supporting-text retro-card__text">{{opinion.text}}</div>
+              </div>
+            </div>
           </div>
         </div>
+      </main>
     </div>
 
+    <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    <script src="//rawgit.com/posva/vue-mdl/master/dist/vue-mdl.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
     <script src="vue.js"></script>
-    <script>
-      var config = {
-        apiKey: "AIzaSyD03ggT9NXR-iY2o2WXmdu0GEmtTMJu8WY",
-        authDomain: "retro-976fa.firebaseapp.com",
-        databaseURL: "https://retro-976fa.firebaseio.com",
-      };
-      firebase.initializeApp(config);
-      let database = firebase.database();
-
-      var app = new Vue({
-        el: '#app',
-        data: {
-          opinions: [],
-          newOpinion: {
-            text: '',
-            value: 0
-          },
-          db: []
-        },
-        methods: {
-          add: function() {
-            this.opinions.push(this.newOpinion);
-            this.newOpinion = {
-              text: '',
-              value: 0
-            };
-          },
-          publish: function(opinion) {
-            this.db.push(this.opinions.splice(this.opinions.indexOf(opinion), 1)[0]);
-            database.ref('db').set(this.db);
-          },
-        }
-      });
-
-      database.ref('db').on('value', data => {
-        app.db = data.val() || [];
-      });
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>
