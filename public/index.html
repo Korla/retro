@@ -2,10 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
     <title>Retro</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.grey-red.min.css" />
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=1">
   </head>
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" id="app">
@@ -18,7 +19,7 @@
       </header>
       <main class="mdl-layout__content retro-layout retro-layout__hidden" v-bind:class="{'retro-layout__hidden': !initialized}">
         <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+          <div class="mdl-cell mdl-cell__left">
             <div class="retro-infotext">
               <label for="opinion">1. Add your opinions locally</label>
             </div>
@@ -42,6 +43,9 @@
             <div class="retro-infotext">
               <label for="opinion">2. Publish them when it's your turn</label>
             </div>
+            <div v-if="!opinions.length">
+              <i>No opinions added yet</i>
+            </div>
             <ul class="mdl-list">
               <li class="mdl-list__item retro-list__item mdl-shadow--2dp" v-for="opinion in opinions">
                 <div class="mdl-list__item-primary-content">
@@ -59,20 +63,22 @@
               </li>
             </ul>
           </div>
-          <div class="mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
+          <div class="mdl-cell mdl-cell__right">
             <div class="retro-infotext">
               <label for="opinion">3. Vote on the published opinions</label>
             </div>
             <div class="retro-opinions">
-              <div v-for="opinion in db" class="retro-card mdl-shadow--2dp">
-                <div class="retro-card__title">
-                  <i class="material-icons mdl-list__item-avatar retro-thumb"
-                     v-bind:class="{ 'retro-thumb__down': !opinion.value }">
-                     thumb_up
-                  </i>
-                  <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion)">Vote ({{opinion.votes}})</mdl-button>
+              <div v-for="opinion in db" class="retro-card">
+                <div class="mdl-shadow--2dp retro-card__content">
+                  <div class="retro-card__title">
+                    <i class="material-icons mdl-list__item-avatar retro-thumb"
+                       v-bind:class="{ 'retro-thumb__down': !opinion.value }">
+                       thumb_up
+                    </i>
+                    <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion)">Vote ({{opinion.votes}})</mdl-button>
+                  </div>
+                  <div class="mdl-card__supporting-text retro-card__text">{{opinion.text}}</div>
                 </div>
-                <div class="mdl-card__supporting-text retro-card__text">{{opinion.text}}</div>
               </div>
             </div>
           </div>

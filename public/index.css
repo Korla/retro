@@ -37,10 +37,16 @@ body {
   margin-top: 10px;
 }
 .retro-card {
-  display: inline-block;
-  margin: 0px 10px 10px 0px;
+  display: flex;
+  width: 25%;
+}
+.retro-card:nth-child(4n) .retro-card__content {
+  margin-right: 0;
+}
+.retro-card__content {
   padding: 10px;
-  width: 200px;
+  margin: 0px 10px 10px 0px;
+  width: 100%;
 }
 .retro-card__title {
   display: flex;
@@ -75,4 +81,21 @@ body {
 }
 .retro-list__item + .retro-list__item {
   margin-top: 5px;
+}
+.mdl-cell__left {
+  width: 30%;
+}
+.mdl-cell__right {
+  flex-grow: 1;
+}
+@media (max-width: 840px) {
+  .mdl-cell__left {
+    width: 100%;
+  }
+  .retro-card {
+    width: 50%;
+  }
+  .retro-card:nth-child(2n) .retro-card__content {
+    margin-right: 0;
+  }
 }
