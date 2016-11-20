@@ -14,10 +14,12 @@
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">Retro</span>
           <div class="mdl-layout-spacer"></div>
-          <mdl-button v-mdl-ripple-effect v-on:click="reset" raised accent>Reset</mdl-button>
+          <mdl-button v-mdl-ripple-effect v-on:click="reset" raised accent class="retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
+            Reset
+          </mdl-button>
         </div>
       </header>
-      <main class="mdl-layout__content retro-layout retro-layout__hidden" v-bind:class="{'retro-layout__hidden': !initialized}">
+      <main class="mdl-layout__content retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell__left">
             <div class="retro-infotext">

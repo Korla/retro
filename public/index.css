@@ -67,10 +67,10 @@ body {
   transform: rotate(180deg);
   background-color: rgb(211, 47, 47);
 }
-.retro-layout {
+.retro-hideable {
   transition: opacity 200ms;
 }
-.retro-layout__hidden {
+.retro-hidden {
   opacity: 0;
 }
 .mdl-switch .mdl-switch__thumb {
