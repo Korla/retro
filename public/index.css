@@ -59,26 +59,23 @@ body {
   margin: 16px;
   padding: 0;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .material-icons.retro-thumb {
   transition: transform 200ms;
-  background-color: rgb(56, 142, 60);
-  cursor: pointer;
+  color: rgb(56, 142, 60);
+  background-color: transparent;
 }
 .material-icons.retro-thumb__down {
   transform: rotate(180deg);
-  background-color: rgb(211, 47, 47);
+  color: rgb(211, 47, 47);
 }
 .retro-hideable {
   transition: opacity 200ms;
 }
 .retro-hidden {
   opacity: 0;
-}
-.mdl-switch .mdl-switch__thumb {
-  background-color: rgb(211, 47, 47);
-}
-.mdl-switch.is-checked .mdl-switch__thumb {
-  background: rgb(56, 142, 60);
 }
 .retro-list__item + .retro-list__item {
   margin-top: 5px;
