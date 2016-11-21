@@ -77,9 +77,18 @@
                        v-bind:class="{ 'retro-thumb__down': !opinion.value }">
                        thumb_up
                     </i>
-                    <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion)">Vote ({{opinion.votes}})</mdl-button>
+                    <mdl-button v-bind:id="'menu-' + $index" icon>
+                      <i class="material-icons">more_vert</i>
+                    </mdl-button>
+                    <mdl-menu v-bind:for="'menu-' + $index">
+                      <mdl-menu-item v-on:click="vote(opinion, -1)">Remove vote</mdl-menu-item>
+                      <mdl-menu-item v-on:click="removeDb(opinion)">Remove opinion</mdl-menu-item>
+                    </mdl-menu>
                   </div>
                   <div class="mdl-card__supporting-text retro-card__text">{{opinion.text}}</div>
+                  <div class="retro-card__secondary-content">
+                    <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion, 1)">Vote ({{opinion.votes}})</mdl-button>
+                  </div>
                 </div>
               </div>
             </div>

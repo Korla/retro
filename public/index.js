@@ -48,13 +48,17 @@ var app = new Vue({
     remove: function(opinion) {
       return this.opinions.splice(this.opinions.indexOf(opinion), 1)[0];
     },
-    vote: function(opinion) {
-      opinion.votes++;
+    vote: function(opinion, delta) {
+      opinion.votes = Math.max(opinion.votes + delta, 0);
       dbRef.set(this.db);
     },
     reset: function() {
       dbRef.set([]);
     },
+    removeDb: function(opinion) {
+      this.db.splice(this.db.indexOf(opinion), 1);
+      dbRef.set(this.db);
+    }
   }
 });
 

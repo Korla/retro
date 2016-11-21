@@ -17,14 +17,12 @@ body {
 .mdl-list__item .mdl-list__item-primary-content {
   width: 100%;
 }
-.mdl-switch {
-  width: 40px;
-  margin-left: 15px;
-}
+.retro-card__secondary-content,
 .mdl-list__item .mdl-list__item-secondary-content {
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
+  display: flex;
 }
 .mdl-textfield {
   width: 100%;
@@ -52,6 +50,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 .retro-card__text {
   max-height: 100px;
