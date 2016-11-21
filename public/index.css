@@ -62,6 +62,7 @@ body {
 .material-icons.retro-thumb {
   transition: transform 200ms;
   background-color: rgb(56, 142, 60);
+  cursor: pointer;
 }
 .material-icons.retro-thumb__down {
   transform: rotate(180deg);

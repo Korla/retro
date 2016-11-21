@@ -29,11 +29,11 @@
               <li class="mdl-list__item mdl-shadow--2dp">
                 <div class="mdl-list__item-primary-content">
                   <i class="material-icons mdl-list__item-avatar retro-thumb"
-                     v-bind:class="{ 'retro-thumb__down': !newOpinion.value }">
+                     v-bind:class="{ 'retro-thumb__down': !newOpinion.value }"
+                     v-on:click="toggle">
                      thumb_up
                    </i>
                   <mdl-textfield v-el:new-opinion-element v-on:keyup.enter="add" floating-label="Text" :value.sync="newOpinion.text" id="opinion"></mdl-textfield>
-                  <mdl-switch :checked.sync="newOpinion.value" class="mdl-js-ripple-effect"></mdl-switch>
                 </div>
                 <div class="mdl-list__item-secondary-content">
                   <mdl-button v-mdl-ripple-effect v-on:click="clear" accent>Clear</mdl-button>

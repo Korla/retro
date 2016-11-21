@@ -38,6 +38,9 @@ var app = new Vue({
         votes: 0
       };
     },
+    toggle: function() {
+      this.newOpinion.value = !this.newOpinion.value;
+    },
     publish: function(opinion) {
       this.db.push(this.remove(opinion));
       dbRef.set(this.db);
