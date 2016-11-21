@@ -87,10 +87,14 @@ body {
 }
 .mdl-cell__right {
   flex-grow: 1;
+  margin-left: 10%;
 }
 @media (max-width: 840px) {
   .mdl-cell__left {
     width: 100%;
+  }
+  .mdl-cell__right {
+    margin-left: 0;
   }
   .retro-card {
     width: 50%;
