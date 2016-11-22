@@ -54,7 +54,7 @@ body {
 }
 .retro-card__text {
   max-height: 100px;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 16px;
   padding: 0;
 }
