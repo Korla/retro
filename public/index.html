@@ -21,56 +21,91 @@
       </header>
       <main class="mdl-layout__content retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
         <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell__left">
+          <div class="mdl-cell retro-cell__left">
             <div class="retro-infotext">
               <label for="opinion">1. Add your opinions locally</label>
             </div>
-            <ul class="mdl-list">
-              <li class="mdl-list__item mdl-shadow--2dp">
-                <div class="mdl-list__item-primary-content">
-                  <i class="material-icons mdl-list__item-avatar retro-thumb cursor-pointer"
-                     v-bind:class="{ 'retro-thumb__down': !newOpinion.value }"
-                     v-on:click="toggle(newOpinion)">
-                     thumb_up
-                   </i>
-                  <mdl-textfield v-el:new-opinion-element v-on:keyup.enter="add" floating-label="Text" :value.sync="newOpinion.text" id="opinion"></mdl-textfield>
-                </div>
-                <div class="mdl-list__item-secondary-content">
-                  <mdl-button v-mdl-ripple-effect v-on:click="clear" accent>Clear</mdl-button>
-                  <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="!newOpinion.text" disabled>Add</mdl-button>
-                  <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="newOpinion.text">Add</mdl-button>
-                </div>
-              </li>
-            </ul>
+            <div class="retro-card2">
+              <div>
+                <i class="material-icons retro-thumb"
+                  v-bind:class="{ 'retro-thumb__down': !newOpinion.value }"
+                  v-on:click="toggle(newOpinion)">
+                  thumb_up
+                </i>
+                <mdl-button v-bind:id="'menu-' + $index" icon>
+                  <i class="material-icons">more_vert</i>
+                </mdl-button>
+                <mdl-menu v-bind:for="'menu-' + $index">
+                  <mdl-menu-item v-on:click="clear">Clear</mdl-menu-item>
+                </mdl-menu>
+              </div>
+              <div>
+                <textarea rows="2" v-model="newOpinion.text" v-el:new-opinion-element></textarea>
+              </div>
+              <div>
+                <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="!newOpinion.text" disabled>Add</mdl-button>
+                <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="newOpinion.text">Add</mdl-button>
+              </div>
+            </div>
             <div class="retro-infotext">
               <label>2. Publish them when it's your turn</label>
             </div>
             <div v-if="!opinions.length">
               <i>No opinions added yet</i>
             </div>
-            <ul class="mdl-list">
-              <li class="mdl-list__item retro-list__item mdl-shadow--2dp" v-for="opinion in opinions">
-                <div class="mdl-list__item-primary-content">
-                  <i class="material-icons mdl-list__item-avatar retro-thumb  cursor-pointer"
-                     v-bind:class="{ 'retro-thumb__down': !opinion.value }"
-                     v-on:click="toggle(opinion)">
-                     thumb_up
-                   </i>
-                  <mdl-textfield floating-label="Text" :value.sync="opinion.text"></mdl-textfield>
-                </div>
-                <div class="mdl-list__item-secondary-content">
-                  <mdl-button v-mdl-ripple-effect v-on:click="remove(opinion)" accent>Remove</mdl-button>
-                  <mdl-button v-mdl-ripple-effect v-on:click="publish(opinion)">Publish</mdl-button>
-                </div>
-              </li>
-            </ul>
+            <div class="retro-card2" v-for="opinion in opinions">
+              <div>
+                <i class="material-icons retro-thumb"
+                  v-bind:class="{ 'retro-thumb__down': !opinion.value }"
+                  v-on:click="toggle(opinion)">
+                  thumb_up
+                </i>
+                <mdl-button v-bind:id="'menu-' + $index" icon>
+                  <i class="material-icons">more_vert</i>
+                </mdl-button>
+                <mdl-menu v-bind:for="'menu-' + $index">
+                  <mdl-menu-item v-on:click="remove">Remove</mdl-menu-item>
+                </mdl-menu>
+              </div>
+              <div>
+                <textarea rows="2" v-model="opinion.text"></textarea>
+              </div>
+              <div>
+                <mdl-button v-mdl-ripple-effect v-on:click="publish(opinion)">Publish</mdl-button>
+              </div>
+            </div>
           </div>
-          <div class="mdl-cell mdl-cell__right">
+          <div class="mdl-cell retro-cell__right">
             <div class="retro-infotext">
               <label>3. Vote on the published opinions</label>
             </div>
             <div class="retro-opinions">
-              <div v-for="opinion in db" class="retro-card">
+              <div class="retro-opinions__wrapper"v-for="opinion in db">
+                <div class="retro-card2 retro-card2__opinion" >
+                  <div>
+                    <i class="material-icons retro-thumb"
+                      v-bind:class="{ 'retro-thumb__down': !opinion.value }"
+                      v-on:click="toggle(opinion)">
+                      thumb_up
+                    </i>
+                    <mdl-button v-bind:id="'menu-' + $index" icon>
+                      <i class="material-icons">more_vert</i>
+                    </mdl-button>
+                    <mdl-menu v-bind:for="'menu-' + $index">
+                      <mdl-menu-item v-on:click="vote(opinion, -1)">Remove vote</mdl-menu-item>
+                      <mdl-menu-item v-on:click="removeDb(opinion)">Remove opinion</mdl-menu-item>
+                      <mdl-menu-item v-on:click="save()">Save opinion</mdl-menu-item>
+                    </mdl-menu>
+                  </div>
+                  <div>
+                    <textarea rows="2" v-model="opinion.text"></textarea>
+                  </div>
+                  <div>
+                    <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion, 1)">Vote ({{opinion.votes}})</mdl-button>
+                  </div>
+                </div>
+              </div>
+              <!-- <div v-for="opinion in db" class="retro-card">
                 <div class="mdl-shadow--2dp retro-card__content">
                   <div class="retro-card__title">
                     <i class="material-icons mdl-list__item-avatar retro-thumb"
@@ -90,7 +125,7 @@
                     <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion, 1)">Vote ({{opinion.votes}})</mdl-button>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

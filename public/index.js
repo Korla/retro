@@ -58,6 +58,9 @@ var app = new Vue({
     removeDb: function(opinion) {
       this.db.splice(this.db.indexOf(opinion), 1);
       dbRef.set(this.db);
+    },
+    save: function() {
+      dbRef.set(this.db);
     }
   }
 });
