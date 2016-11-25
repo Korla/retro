@@ -1,11 +1,3 @@
-var config = {
-  apiKey: "AIzaSyD03ggT9NXR-iY2o2WXmdu0GEmtTMJu8WY",
-  authDomain: "retro-976fa.firebaseapp.com",
-  databaseURL: "https://retro-976fa.firebaseio.com",
-};
-firebase.initializeApp(config);
-let dbRef = firebase.database().ref('db');
-
 Vue.use(VueMdl.default)
 var app = new Vue({
   components: VueMdl.components,
@@ -13,13 +5,47 @@ var app = new Vue({
   el: '#app',
   data: {
     initialized: false,
-    opinions: [],
     newOpinion: {
       text: '',
-      value: true,
-      votes: 0
+      value: true
     },
-    db: []
+    unpublishedOpinions: [],
+    publishedOpinions: [],
+    votes: {}
+  },
+  attached: function() {
+    window.setTimeout(() => this.initialized = true);
+  },
+  init: function() {
+    var config = {
+      apiKey: "AIzaSyD03ggT9NXR-iY2o2WXmdu0GEmtTMJu8WY",
+      authDomain: "retro-976fa.firebaseapp.com",
+      databaseURL: "https://retro-976fa.firebaseio.com",
+    };
+    firebase.initializeApp(config);
+    this.db = {
+      opinions: firebase.database().ref('opinions'),
+      votes: firebase.database().ref('votes')
+    }
+    this.db.opinions.on('child_added', data => {
+      this.publishedOpinions.push(data.val());
+      Vue.set(this.votes, data.key, this.votes[data.key] || 0);
+    });
+    this.db.opinions.on('child_changed', data => {
+      var opinion = data.val();
+      var index = this.publishedOpinions.findIndex(o => o.key === opinion.key);
+      this.publishedOpinions[index] = opinion;
+    });
+    this.db.opinions.on('child_removed', data => {
+      var opinion = data.val();
+      var index = this.publishedOpinions.findIndex(o => o.key === opinion.key);
+      this.publishedOpinions.splice(index, 1);
+    });
+    this.db.votes.on('child_added', data => {
+      var vote = data.val();
+      Vue.set(this.votes, vote.opinionKey, this.votes[vote.opinionKey] || 0);
+      this.votes[vote.opinionKey] += vote.delta;
+    });
   },
   ready: function() {
     this.$els.newOpinionElement.focus();
@@ -27,45 +53,40 @@ var app = new Vue({
   methods: {
     add: function() {
       if(!this.newOpinion.text) return;
-      this.opinions.push(this.newOpinion);
+      this.unpublishedOpinions.push(this.newOpinion);
       this.clear();
       this.$els.newOpinionElement.focus();
     },
     clear: function() {
       this.newOpinion = {
         text: '',
-        value: true,
-        votes: 0
+        value: true
       };
     },
     toggle: function(opinion) {
       opinion.value = !opinion.value;
     },
-    publish: function(opinion) {
-      this.db.push(this.remove(opinion));
-      dbRef.set(this.db);
+    publish: function(opinionToPublish) {
+      var newOpinion = this.db.opinions.push();
+      opinionToPublish.key = newOpinion.key;
+      newOpinion.set(opinionToPublish);
+      this.removeFromUnpublished(opinionToPublish);
     },
-    remove: function(opinion) {
-      return this.opinions.splice(this.opinions.indexOf(opinion), 1)[0];
+    removeFromUnpublished: function(opinionToPublish) {
+      return this.unpublishedOpinions.splice(this.unpublishedOpinions.indexOf(opinionToPublish), 1)[0];
     },
     vote: function(opinion, delta) {
-      opinion.votes = Math.max(opinion.votes + delta, 0);
-      dbRef.set(this.db);
+      var newVote = this.db.votes.push();
+      newVote.set({delta, opinionKey: opinion.key});
     },
     reset: function() {
-      dbRef.set([]);
+      this.publishedOpinions = [];
+      this.db.opinions.set(this.publishedOpinions);
+      this.votes = [];
+      this.db.votes.set(this.votes);
     },
     removeDb: function(opinion) {
-      this.db.splice(this.db.indexOf(opinion), 1);
-      dbRef.set(this.db);
-    },
-    save: function() {
-      dbRef.set(this.db);
+      this.db.opinions.child(opinion.key).remove();
     }
   }
-});
-
-dbRef.on('value', data => {
-  app.initialized = true;
-  app.db = data.val() || [];
 });

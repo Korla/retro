@@ -82,9 +82,12 @@ textarea:focus {
   margin-left: 10%;
 }
 
+.fade-transition,
 .retro-hideable {
-  transition: opacity 200ms;
+  transition: opacity 400ms;
 }
+.fade-enter,
+.fade-leave,
 .retro-hidden {
   opacity: 0;
 }

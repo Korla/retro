@@ -50,10 +50,10 @@
             <div class="retro-infotext">
               <label>2. Publish them when it's your turn</label>
             </div>
-            <div v-if="!opinions.length">
+            <div v-if="!unpublishedOpinions.length">
               <i>No opinions added yet</i>
             </div>
-            <div class="retro-card2" v-for="opinion in opinions">
+            <div class="retro-card2" v-for="opinion in unpublishedOpinions" transition="fade">
               <div>
                 <i class="material-icons retro-thumb"
                   v-bind:class="{ 'retro-thumb__down': !opinion.value }"
@@ -64,7 +64,7 @@
                   <i class="material-icons">more_vert</i>
                 </mdl-button>
                 <mdl-menu v-bind:for="'menu-' + $index">
-                  <mdl-menu-item v-on:click="remove">Remove</mdl-menu-item>
+                  <mdl-menu-item v-on:click="removeFromUnpublished">Remove</mdl-menu-item>
                 </mdl-menu>
               </div>
               <div>
@@ -80,7 +80,7 @@
               <label>3. Vote on the published opinions</label>
             </div>
             <div class="retro-opinions">
-              <div class="retro-opinions__wrapper"v-for="opinion in db">
+              <div class="retro-opinions__wrapper"v-for="opinion in publishedOpinions" transition="fade">
                 <div class="retro-card2 retro-card2__opinion" >
                   <div>
                     <i class="material-icons retro-thumb"
@@ -94,14 +94,13 @@
                     <mdl-menu v-bind:for="'menu-' + $index">
                       <mdl-menu-item v-on:click="vote(opinion, -1)">Remove vote</mdl-menu-item>
                       <mdl-menu-item v-on:click="removeDb(opinion)">Remove opinion</mdl-menu-item>
-                      <mdl-menu-item v-on:click="save()">Save opinion</mdl-menu-item>
                     </mdl-menu>
                   </div>
                   <div>
                     <textarea rows="2" v-model="opinion.text"></textarea>
                   </div>
                   <div>
-                    <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion, 1)">Vote ({{opinion.votes}})</mdl-button>
+                    <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion, 1)">Vote ({{votes[opinion.key]}})</mdl-button>
                   </div>
                 </div>
               </div>
