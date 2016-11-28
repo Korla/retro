@@ -53,25 +53,27 @@
             <div v-if="!unpublishedOpinions.length">
               <i>No opinions added yet</i>
             </div>
-            <div class="retro-card2" v-for="opinion in unpublishedOpinions" transition="fade">
-              <div>
-                <i class="material-icons retro-thumb"
-                  v-bind:class="{ 'retro-thumb__down': !opinion.value }"
-                  v-on:click="toggle(opinion)">
-                  thumb_up
-                </i>
-                <mdl-button v-bind:id="'menu-' + $index" icon>
-                  <i class="material-icons">more_vert</i>
-                </mdl-button>
-                <mdl-menu v-bind:for="'menu-' + $index">
-                  <mdl-menu-item v-on:click="removeFromUnpublished">Remove</mdl-menu-item>
-                </mdl-menu>
-              </div>
-              <div>
-                <textarea rows="2" v-model="opinion.text"></textarea>
-              </div>
-              <div>
-                <mdl-button v-mdl-ripple-effect v-on:click="publish(opinion)">Publish</mdl-button>
+            <div v-for="opinion in unpublishedOpinions" transition="fade">
+              <div class="retro-card2">
+                <div>
+                  <i class="material-icons retro-thumb"
+                    v-bind:class="{ 'retro-thumb__down': !opinion.value }"
+                    v-on:click="toggle(opinion)">
+                    thumb_up
+                  </i>
+                  <mdl-button v-bind:id="'menu-' + $index" icon>
+                    <i class="material-icons">more_vert</i>
+                  </mdl-button>
+                  <mdl-menu v-bind:for="'menu-' + $index">
+                    <mdl-menu-item v-on:click="removeFromUnpublished">Remove</mdl-menu-item>
+                  </mdl-menu>
+                </div>
+                <div>
+                  <textarea rows="2" v-model="opinion.text"></textarea>
+                </div>
+                <div>
+                  <mdl-button v-mdl-ripple-effect v-on:click="publish(opinion)">Publish</mdl-button>
+                </div>
               </div>
             </div>
           </div>
@@ -80,7 +82,7 @@
               <label>3. Vote on the published opinions</label>
             </div>
             <div class="retro-opinions">
-              <div class="retro-opinions__wrapper"v-for="opinion in publishedOpinions" transition="fade">
+              <div class="retro-opinions__wrapper"v-for="opinion in publishedOpinions" transition="fade" stagger="100">
                 <div class="retro-card2 retro-card2__opinion" >
                   <div>
                     <i class="material-icons retro-thumb"
