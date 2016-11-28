@@ -11,16 +11,15 @@
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" id="app">
       <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
+        <div class="mdl-layout__header-row retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
           <span class="mdl-layout-title">Retro</span>
           <div class="mdl-layout-spacer"></div>
-          <mdl-button v-mdl-ripple-effect v-on:click="reset" raised accent class="retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
-            Reset
-          </mdl-button>
+          <mdl-button v-on:click="exportToClipboard" v-mdl-ripple-effect raised accent>Export</mdl-button>
+          <mdl-button v-on:click="reset" v-mdl-ripple-effect raised accent>Reset</mdl-button>
         </div>
       </header>
       <main class="mdl-layout__content retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
-        <div class="mdl-grid">
+        <div class="mdl-grid" v-if="!exporting">
           <div class="mdl-cell retro-cell__left">
             <div class="retro-infotext">
               <label for="opinion">1. Add your opinions locally</label>
@@ -82,7 +81,7 @@
               <label>3. Vote on the published opinions</label>
             </div>
             <div class="retro-opinions">
-              <div class="retro-opinions__wrapper"v-for="opinion in publishedOpinions" transition="fade" stagger="100">
+              <div class="retro-opinions__wrapper" v-for="opinion in publishedOpinions" transition="fade" stagger="100">
                 <div class="retro-card2 retro-card2__opinion" >
                   <div>
                     <i class="material-icons retro-thumb"
@@ -110,6 +109,7 @@
           </div>
         </div>
       </main>
+      <textarea class="retro-export" v-el:export-element></textarea>
     </div>
 
     <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>

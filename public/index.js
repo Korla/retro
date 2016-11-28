@@ -4,6 +4,7 @@ var app = new Vue({
   directives: VueMdl.directives,
   el: '#app',
   data: {
+    exporting: false,
     initialized: false,
     newOpinion: {
       text: '',
@@ -79,14 +80,33 @@ var app = new Vue({
       var newVote = this.db.votes.push();
       newVote.set({delta, opinionKey: opinion.key});
     },
+    removeDb: function(opinion) {
+      this.db.opinions.child(opinion.key).remove();
+    },
     reset: function() {
       this.publishedOpinions = [];
       this.db.opinions.set(this.publishedOpinions);
       this.votes = [];
       this.db.votes.set(this.votes);
     },
-    removeDb: function(opinion) {
-      this.db.opinions.child(opinion.key).remove();
+    exportToClipboard: function() {
+      var newLine = '\n';
+      var indentation = ' ';
+      var extractRowData = o => ([
+        o.text,
+        o.value ? 'Positive' : 'Negative',
+        'Votes: ' + this.votes[o.key]
+      ]);
+      var createRowText = rows => rows.join(newLine + indentation)
+      var text = this.publishedOpinions
+        .map(extractRowData)
+        .map(createRowText)
+        .join(newLine);
+
+      this.$els.exportElement.textContent = text;
+      this.$els.exportElement.select();
+
+      document.execCommand('copy');
     }
   }
 });

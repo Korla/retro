@@ -1,6 +1,11 @@
 body {
   font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
+
+.mdl-button + .mdl-button {
+  margin-left: 10px;
+}
+
 .retro-infotext {
   display: flex;
   align-items: center;
@@ -105,4 +110,12 @@ textarea:focus {
   .retro-opinions__wrapper:nth-child(2n) .retro-card2 {
     margin-right: 0;
   }
+}
+
+.retro-export {
+  display: inline-block;
+  width: 1px;
+  height: 1px;
+  left: -10000px;
+  position: absolute;
 }
