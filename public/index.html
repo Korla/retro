@@ -98,7 +98,7 @@
                     </mdl-menu>
                   </div>
                   <div>
-                    <textarea rows="2" v-model="opinion.text"></textarea>
+                    <div>{{opinion.text}}</div>
                   </div>
                   <div>
                     <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion, 1)">Vote ({{votes[opinion.key]}})</mdl-button>
