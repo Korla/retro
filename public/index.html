@@ -15,7 +15,6 @@
           <span class="mdl-layout-title">Retro</span>
           <div class="mdl-layout-spacer"></div>
           <mdl-button v-on:click="exportToClipboard" v-mdl-ripple-effect raised accent>Export</mdl-button>
-          <mdl-button v-on:click="reset" v-mdl-ripple-effect raised accent>Reset</mdl-button>
         </div>
       </header>
       <main class="mdl-layout__content retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">

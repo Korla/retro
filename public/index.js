@@ -83,12 +83,6 @@ var app = new Vue({
     removeDb: function(opinion) {
       this.db.opinions.child(opinion.key).remove();
     },
-    reset: function() {
-      this.publishedOpinions = [];
-      this.db.opinions.set(this.publishedOpinions);
-      this.votes = [];
-      this.db.votes.set(this.votes);
-    },
     exportToClipboard: function() {
       var newLine = '\n';
       var indentation = ' ';
