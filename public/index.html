@@ -20,9 +20,6 @@
       <main class="mdl-layout__content retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
         <div class="mdl-grid" v-if="!exporting">
           <div class="mdl-cell retro-cell__left">
-            <div class="retro-infotext">
-              <label for="opinion">1. Add your opinions locally</label>
-            </div>
             <div class="retro-card2">
               <div>
                 <i class="material-icons retro-thumb"
@@ -44,9 +41,6 @@
                 <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="!newOpinion.text" disabled>Add</mdl-button>
                 <mdl-button v-mdl-ripple-effect v-on:click="add" v-show="newOpinion.text">Add</mdl-button>
               </div>
-            </div>
-            <div class="retro-infotext">
-              <label>2. Publish them when it's your turn</label>
             </div>
             <div v-if="!unpublishedOpinions.length">
               <i>No opinions added yet</i>
@@ -76,12 +70,9 @@
             </div>
           </div>
           <div class="mdl-cell retro-cell__right">
-            <div class="retro-infotext">
-              <label>3. Vote on the published opinions</label>
-            </div>
             <div class="retro-opinions">
               <div class="retro-opinions__wrapper" v-for="opinion in publishedOpinions" transition="fade" stagger="100">
-                <div class="retro-card2 retro-card2__opinion" >
+                <div class="retro-card2 retro-opinion" >
                   <div>
                     <i class="material-icons retro-thumb"
                       v-bind:class="{ 'retro-thumb__down': !opinion.value }"
@@ -96,9 +87,7 @@
                       <mdl-menu-item v-on:click="removeDb(opinion)">Remove opinion</mdl-menu-item>
                     </mdl-menu>
                   </div>
-                  <div>
-                    <div>{{opinion.text}}</div>
-                  </div>
+                  <div class="retro-opinion__text">{{opinion.text}}</div>
                   <div>
                     <mdl-button v-mdl-ripple-effect v-on:click="vote(opinion, 1)">Vote ({{votes[opinion.key]}})</mdl-button>
                   </div>
