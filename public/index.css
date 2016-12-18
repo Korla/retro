@@ -28,11 +28,11 @@ body {
   width: 25%;
 }
 
-.retro-opinions__wrapper:nth-child(4n) .retro-card2 {
+.retro-opinions__wrapper:nth-child(4n) .retro-card {
   margin-right: 0;
 }
 
-.retro-card2 {
+.retro-card {
   display: flex;
   flex-direction: column;
   padding: 5px;
@@ -41,17 +41,17 @@ body {
   color: black;
 }
 
-.retro-card2 > * {
+.retro-card > * {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.retro-card2 > * + * {
+.retro-card > * + * {
   margin-top: 5px;
 }
 
-.retro-card2 > *:last-child {
+.retro-card > *:last-child {
   justify-content: flex-end;
 }
 
@@ -123,7 +123,7 @@ textarea:focus {
   .retro-opinions__wrapper {
     width: 50%;
   }
-  .retro-opinions__wrapper:nth-child(2n) .retro-card2 {
+  .retro-opinions__wrapper:nth-child(2n) .retro-card {
     margin-right: 0;
   }
 }

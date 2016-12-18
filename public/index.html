@@ -20,7 +20,7 @@
       <main class="mdl-layout__content retro-hideable retro-hidden" v-bind:class="{'retro-hidden': !initialized}">
         <div class="mdl-grid" v-if="!exporting">
           <div class="mdl-cell retro-cell__left">
-            <div class="retro-card2">
+            <div class="retro-card">
               <div>
                 <i class="material-icons retro-thumb"
                   v-bind:class="{ 'retro-thumb__down': !newOpinion.value }"
@@ -46,7 +46,7 @@
               <i>No opinions added yet</i>
             </div>
             <div v-for="opinion in unpublishedOpinions" transition="fade">
-              <div class="retro-card2">
+              <div class="retro-card">
                 <div>
                   <i class="material-icons retro-thumb"
                     v-bind:class="{ 'retro-thumb__down': !opinion.value }"
@@ -72,7 +72,7 @@
           <div class="mdl-cell retro-cell__right">
             <div class="retro-opinions">
               <div class="retro-opinions__wrapper" v-for="opinion in publishedOpinions" transition="fade" stagger="100">
-                <div class="retro-card2 retro-opinion" >
+                <div class="retro-card retro-opinion" >
                   <div>
                     <i class="material-icons retro-thumb"
                       v-bind:class="{ 'retro-thumb__down': !opinion.value }"
