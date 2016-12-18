@@ -94,13 +94,25 @@ var app = new Vue({
       var indentation = ' ';
       var extractRowData = o => ([
         o.text,
-        o.value ? 'Positive' : 'Negative',
-        'Votes: ' + this.votes[o.key]
+        '(' + this.votes[o.key] + ')'
       ]);
-      var createRowText = rows => rows.join(newLine + indentation)
-      var text = this.publishedOpinions
-        .map(extractRowData)
-        .map(createRowText)
+
+      var output = this.publishedOpinions
+        .map(opinion => ({
+          category: opinion.value ? 'Positive' : 'Negative',
+          data: extractRowData(opinion).join(indentation)
+        }))
+        .reduce((prev, {category, data}) => {
+          prev[category] = prev[category] || [];
+          prev[category].push(data);
+          return prev;
+        }, {});
+      var text = Object.entries(output)
+        .map(([category, value]) => {
+          let output = category + newLine;
+          output += value.join(newLine);
+          return output;
+        }, '')
         .join(newLine);
 
       this.$els.exportElement.textContent = text;
