@@ -14,8 +14,17 @@ var app = new Vue({
     publishedOpinions: [],
     votes: {}
   },
+  watch: {
+    unpublishedOpinions: {
+      deep: true,
+      handler: function() {
+        localStorage.setItem('unpublishedOpinions', JSON.stringify(this.unpublishedOpinions));
+      }
+    }
+  },
   attached: function() {
     window.setTimeout(() => this.initialized = true);
+    this.unpublishedOpinions = JSON.parse(localStorage.getItem('unpublishedOpinions'));
   },
   init: function() {
     var config = {
