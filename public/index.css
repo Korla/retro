@@ -70,7 +70,7 @@ body {
   color: rgb(56, 142, 60);
   background-color: transparent;
   cursor: pointer;
-  font-size: 30gpx;
+  font-size: 30px;
 }
 .retro-thumb__down {
   transform: rotate(180deg);
