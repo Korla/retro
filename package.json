@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "firebase serve",
-    "deploy": "firebase deploy",
+    "deploy": "npm run gbuild && firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
