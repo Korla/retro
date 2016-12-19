@@ -28,3 +28,4 @@ Thumbs.db
 
 # For the on-the-fly uglify middleware
 .cache
+bundle.js*

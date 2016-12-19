@@ -110,11 +110,12 @@ var app = new Vue({
           prev[category].push(data);
           return prev;
         }, {});
-      var text = Object.entries(output)
-        .map(([category, value]) => {
-          let output = category + newLine;
-          output += value.join(newLine);
-          return output;
+      var text = Object.keys(output)
+        .map(category => {
+          var value = output[category]
+          let result = category + newLine;
+          result += value.join(newLine);
+          return result;
         }, '')
         .join(newLine);
 
