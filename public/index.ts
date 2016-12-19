@@ -24,7 +24,7 @@ var app = new Vue({
   },
   attached: function() {
     window.setTimeout(() => this.initialized = true);
-    this.unpublishedOpinions = JSON.parse(localStorage.getItem('unpublishedOpinions'));
+    this.unpublishedOpinions = JSON.parse(localStorage.getItem('unpublishedOpinions')) || [];
   },
   init: function() {
     var config = {
